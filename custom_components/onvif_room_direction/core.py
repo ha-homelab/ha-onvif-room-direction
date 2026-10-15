@@ -18,12 +18,7 @@ API_VERSION = 1
 
 def valid_pan(value: Any) -> bool:
     """Accept finite numeric normalized pan positions; explicitly reject bools."""
-    return (
-        not isinstance(value, bool)
-        and isinstance(value, (float, int))
-        and math.isfinite(value)
-        and -1 <= value <= 1
-    )
+    return not isinstance(value, bool) and isinstance(value, (float, int)) and -1 <= value <= 1
 
 
 @dataclass(frozen=True)
@@ -147,7 +142,6 @@ class DirectionConfig:
             if (
                 isinstance(value, bool)
                 or not isinstance(value, (int, float))
-                or not math.isfinite(value)
                 or not minimum <= value <= maximum
             ):
                 raise ValueError(f"Invalid {field}")

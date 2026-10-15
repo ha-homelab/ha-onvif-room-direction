@@ -53,6 +53,9 @@ class DirectionSensor(SensorEntity):
         self._eligibility = eligibility
         self._task: asyncio.Task | None = None
         self._tasks: set[asyncio.Task] = set()
+        # Cancellation is cooperative: a transport may finish an old request
+        # after a new detection episode starts. Keep those reads serialized.
+        self._read_lock = asyncio.Lock()
         self._stopped = False
         self._published = None
         self._cancel_expiry: Callable[[], None] | None = None
@@ -177,8 +180,13 @@ class DirectionSensor(SensorEntity):
             while self._task is task and not self._stopped and self._active():
                 delay = self.config.poll_interval
                 try:
-                    async with asyncio.timeout(self.config.timeout):
-                        reading = await reader.read()
+                    async with self._read_lock:
+                        async with asyncio.timeout(self.config.timeout) as deadline:
+                            reading = await reader.read()
+                        # A transport may catch CancelledError and return a late
+                        # result instead of propagating the timeout cancellation.
+                        if deadline.expired():
+                            raise TimeoutError
                     if self._task is not task or self._stopped or not self._active():
                         break
                     if reading.generation != generation:

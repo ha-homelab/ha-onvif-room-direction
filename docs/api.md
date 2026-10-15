@@ -42,6 +42,10 @@ entity = DirectionSensor(
 
 The class manages its own event subscriptions, task cancellation, expiry timer and shutdown. Never call its internal `_observe` directly. Underscore-prefixed fields and methods are internal and can change. It creates no movement services and never takes ownership of the shared ONVIF client.
 
+Reads are serialized within a sensor, including across cancelled detection episodes. An old transport that delays cancellation can delay the next read, but its result cannot update the new episode. Results returned after the read timeout are rejected even when a transport suppresses cancellation. The shared client is never forcibly closed by this helper.
+
+Unload waits at most `timeout + 1` seconds for outstanding tasks. Fully noncooperative third-party I/O may outlive that wait, with its result blocked from publication. The lock is per sensor, not a global lock on the shared ONVIF client; it does not serialize separate sensor instances or a replacement instance created after a bounded unload.
+
 `adapter.OnvifPanReader(resolve, max_age=15, future_skew=5, utcnow=...)` accepts a synchronous runtime resolver. `await reader.read()` returns `PanReading(pan, timestamp, generation)`. Generation changes when the resolved object changes. Clear confirmation after a generation change or any exception. Upstream exceptions may contain private values; do not print them. `ObservationError` contains a fixed reason defined by this package; the HA sensor sanitizes other exceptions.
 
-Version 1 is a beta contract. Breaking changes will update `API_VERSION` and the changelog. The public HA domain, manifest version, packaged distribution version and root `version` file must remain synchronized.
+Breaking changes will update `API_VERSION` and the changelog. Check the selected release's channel and notes when depending on this contract. The public HA domain is stable; the manifest version, packaged distribution version and root `version` file must remain synchronized.

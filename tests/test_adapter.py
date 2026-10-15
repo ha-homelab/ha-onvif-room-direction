@@ -45,6 +45,7 @@ async def test_read_only_calls_and_duplicate_timestamps():
         (status(stamp=None), "missing_timestamp"),
         (status(pan=True), "invalid_position"),
         (status(pan=float("nan")), "invalid_position"),
+        (status(pan=10**400), "invalid_position"),
         (status(error="upstream sensitive error"), "camera_error"),
         (status(space="urn:other-space"), "unsupported_coordinate_space"),
         (NS(Error=None, UtcTime=NOW, Position=None), "invalid_position"),
