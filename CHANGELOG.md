@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0b1 — Initial public beta
+## 0.1.0 beta — Initial public beta
 
 - Extract a reusable normalized-pan classifier and time-separated area confirmation API.
 - Add a standalone Home Assistant config flow and options, with one helper per existing ONVIF device.

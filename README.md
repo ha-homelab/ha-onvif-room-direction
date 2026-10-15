@@ -2,7 +2,7 @@
 
 An event-gated Home Assistant sensor that estimates which calibrated area an ONVIF camera points toward. It reuses the existing ONVIF integration's authenticated client and reads PTZ status while a selected detection sensor is on.
 
-**Public beta · 0.1.0b1 · Home Assistant 2026.10.0 API baseline**
+**Public beta · 0.1.0 · Home Assistant 2026.10.0 API baseline**
 
 This is a camera-direction estimate. It does not identify people or establish occupancy. It never sends camera movement commands, opens a video stream, creates another ONVIF event subscription, or stores camera credentials. Multiple cameras are supported through separate config entries.
 
