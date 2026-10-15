@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: MIT -->
+<!-- Generated replay: scripts/build-demo.py injects actual core classification results. -->
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ONVIF Room Direction · Synthetic replay</title>
+<style>
+  :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172e38;background:#eff4f3;font-synthesis:none}
+  *{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}main{max-width:1160px;margin:0 auto;padding:42px 28px 28px}
+  .eyebrow{font-size:12px;font-weight:750;letter-spacing:1.8px;text-transform:uppercase;color:#467466;margin:0 0 12px}.top{display:flex;justify-content:space-between;align-items:center;gap:24px}
+  h1{font-size:37px;letter-spacing:-1.4px;line-height:1.12;margin:0 0 12px}h2{font-size:17px;margin:0 0 8px;letter-spacing:-.3px}p{line-height:1.55}.subtitle{max-width:710px;color:#5e737b;margin:0;font-size:15px}.beta{background:#e5eee5;color:#40633e;border:1px solid #cbdcc8;border-radius:20px;padding:8px 14px;white-space:nowrap;font-size:12px;font-weight:750}
+  .notice{margin:26px 0 24px;border:1px solid #d4dfda;background:#f9fbf7;border-radius:10px;padding:12px 16px;color:#53645d;font-size:12px}.notice strong{color:#365844}
+  .grid{display:grid;grid-template-columns:1.62fr 1fr;gap:22px}.card{border:1px solid #d9e2e0;border-radius:18px;background:#fff;box-shadow:0 3px 14px #1e453105;overflow:hidden}.card-pad{padding:24px}.card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.muted{color:#78898e;font-size:12px}.live{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:750;color:#53756d}.dot{width:7px;height:7px;border-radius:100%;background:#8caf9e}
+  .plan{height:278px;position:relative;display:flex;gap:5px;margin:26px 0 22px;border:8px solid #d9e3e0;border-radius:12px;padding:12px;background:#f2f6f5;overflow:hidden}.zone{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #dbe6e1;border-radius:8px;background:#eaf0ec;transition:background .15s,border .15s;color:#73847c}.zone.active{background:#d9efe5;border:2px solid #579c7e;color:#256247}.zone-name{font-size:23px;font-weight:700;letter-spacing:-.6px}.zone-note{font-size:11px;margin-top:5px}.gap{width:55px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#7d8d87;background:repeating-linear-gradient(45deg,#f1f4ee,#f1f4ee 7px,#e9eee7 7px,#e9eee7 8px);border-radius:5px}.camera{position:absolute;left:calc(50% - 26px);bottom:18px;width:52px;height:38px;border-radius:9px;background:#26483f;border:4px solid #fff;box-shadow:0 2px 8px #304c4920;display:flex;align-items:center;justify-content:center;color:white;font-size:22px}.caption{font-size:12px;line-height:1.5;color:#697e77}.legend{display:flex;gap:18px;margin-top:12px}.legend span{display:flex;align-items:center;gap:6px;font-size:11px;color:#688078}.swatch{width:10px;height:10px;border-radius:3px;background:#d9efe5;border:1px solid #579c7e}.swatch.gray{background:#eef1ec;border-color:#cdd7d0}
+  .status{padding:24px;border-bottom:1px solid #e5ece9}.label{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#798a85;font-weight:750}.area{font-size:39px;font-weight:700;letter-spacing:-1.5px;color:#2b7455;margin:9px 0}.reason{font-size:12px;color:#657d72}.metrics{padding:6px 24px}.metric{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:16px 0;border-bottom:1px solid #edf1ef;font-size:12px;color:#6b7e76}.metric:last-child{border:none}.metric strong{color:#284d3e;font-size:13px}.safe{margin:10px 24px 24px;padding:13px;background:#f4f7f2;border-radius:9px;color:#66805f;font-size:11px;line-height:1.65}
+  .replay{margin-top:22px;padding:22px 24px}.replay-top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}.controls{display:flex;align-items:center;gap:8px}button{border:1px solid #cedcd4;background:#fff;color:#37634d;border-radius:7px;padding:8px 12px;font-size:12px}button.primary{background:#315f49;color:white;border-color:#315f49}button:focus-visible,input:focus-visible{outline:3px solid #e2ac48;outline-offset:3px}.timeline-row{display:flex;align-items:center;gap:18px}input{width:100%;accent-color:#498366}.time{white-space:nowrap;color:#456350;font-size:12px;font-variant-numeric:tabular-nums}.timeline-labels{display:flex;justify-content:space-between;margin:12px 80px 0 2px;font-size:10px;color:#89998e}.footer{margin:20px 1px 0;display:flex;justify-content:space-between;gap:20px;font-size:10px;color:#8b9a94;line-height:1.6}.footer strong{color:#657f70}
+  @media(max-width:700px){main{padding:26px 17px}.top{display:block}h1{font-size:29px}.beta{display:inline-block;margin-top:16px}.grid{grid-template-columns:1fr}.plan{height:240px}.card-pad{padding:20px}.replay-top{align-items:flex-start;flex-direction:column}.replay{padding:20px}.timeline-labels{margin-right:0;font-size:9px}.footer{display:block}.footer span{display:block;margin-bottom:8px}.area{font-size:33px}}
+</style>
+<main>
+  <div class="top"><div><p class="eyebrow">HA Homelab / Local sensing</p><h1>Where is the camera looking?</h1><p class="subtitle">Turn existing ONVIF direction and detection signals into a conservative area estimate.</p></div><span class="beta">0.1.0b1 · PUBLIC BETA</span></div>
+  <div class="notice"><strong>OFFLINE SYNTHETIC REPLAY</strong> &nbsp; Invented areas and coordinates. This demonstration is not Home Assistant UI or live telemetry.</div>
+  <div class="grid">
+    <section class="card card-pad"><div class="card-top"><h2>Calibrated areas</h2><span class="live"><i class="dot"></i> READ ONLY</span></div><span class="muted">Conceptual view · no real floor plan</span>
+      <div class="plan"><div class="zone" id="zone_a"><span class="zone-name">zone_a</span><span class="zone-note">−1 ≤ pan &lt; −0.2</span></div><div class="gap">Unknown gap</div><div class="zone" id="zone_b"><span class="zone-name">zone_b</span><span class="zone-note">0.2 &lt; pan ≤ 1</span></div><div class="camera" aria-label="Synthetic camera">◉</div></div>
+      <p class="caption">An area is highlighted only after two valid observations agree, at least two seconds apart. Ambiguous directions clear it immediately.</p><div class="legend"><span><i class="swatch"></i> Confirmed estimate</span><span><i class="swatch gray"></i> No current estimate</span></div>
+    </section>
+    <section class="card" aria-live="polite"><div class="status"><div class="label">Direction sensor</div><div class="area" id="area">unknown</div><div class="reason" id="reason">idle</div></div><div class="metrics"><div class="metric"><span>Detection source</span><strong id="detection">Off</strong></div><div class="metric"><span>Normalized pan</span><strong id="pan">—</strong></div><div class="metric"><span>Confirmation interval</span><strong>2 seconds</strong></div><div class="metric"><span>Camera commands</span><strong>GetStatus only</strong></div></div><div class="safe">No movement · no video stream<br>No additional ONVIF event subscription</div></section>
+  </div>
+  <section class="card replay"><div class="replay-top"><div><h2>Replay a detection</h2><span class="muted">Step through confirmation, the gap, a stale response and recovery.</span></div><div class="controls"><button class="primary" id="play">Play replay</button><button id="step">Next</button><button id="reset">Reset</button></div></div><div class="timeline-row"><input aria-label="Replay sample" type="range" id="timeline" min="0" max="10" step="1" value="3"><span class="time" id="time">06 / 20 s</span></div><div class="timeline-labels"><span>Detection starts</span><span>Unknown gap</span><span>Stale reading</span><span>Clear on stop</span></div></section>
+  <div class="footer"><span><strong>Camera direction ≠ occupancy.</strong> Multiple people, parked cameras and changed mounting can make estimates misleading.</span><span>Generated from core API v1 · No external assets or network requests</span></div>
+</main>
+<script id="frames" type="application/json">__FRAMES_JSON__</script>
+<script>
+  const frames = JSON.parse(document.getElementById('frames').textContent);
+  const timeline = document.getElementById('timeline');
+  let timer = null;
+  function render() {
+    const f = frames[Number(timeline.value)];
+    document.getElementById('area').textContent = f.area || (f.available ? 'unknown' : 'unavailable');
+    document.getElementById('area').style.color = f.area ? '#2b7455' : '#7a8580';
+    document.getElementById('reason').textContent = f.reason === 'confirmed' ? 'Confirmed · two fresh observations' : f.reason === 'stale_position' ? 'Cleared · stale camera timestamp' : f.reason === 'idle' ? 'Idle · polling stopped' : 'Unconfirmed · no area assigned';
+    document.getElementById('detection').textContent = f.active ? 'On' : 'Off';
+    document.getElementById('pan').textContent = f.pan === null ? '—' : f.pan.toFixed(2);
+    document.getElementById('time').textContent = String(f.seconds).padStart(2, '0') + ' / 20 s';
+    for (const area of ['zone_a','zone_b']) document.getElementById(area).classList.toggle('active', f.area === area);
+  }
+  function stop() { clearInterval(timer); timer=null; document.getElementById('play').textContent='Play replay'; }
+  timeline.addEventListener('input', () => {stop();render();});
+  document.getElementById('reset').onclick=()=>{stop();timeline.value=0;render();};
+  document.getElementById('step').onclick=()=>{stop();timeline.value=(Number(timeline.value)+1)%frames.length;render();};
+  document.getElementById('play').onclick=()=>{if(timer){stop();return;}if(Number(timeline.value)===frames.length-1)timeline.value=0;document.getElementById('play').textContent='Pause';render();timer=setInterval(()=>{timeline.value=Number(timeline.value)+1;render();if(Number(timeline.value)===frames.length-1)stop();},1000);};
+  render();
+</script>
+</html>

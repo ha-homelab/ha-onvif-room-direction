@@ -1,0 +1,48 @@
+{
+  "title": "ONVIF Room Direction",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Estimate a camera direction",
+        "description": "Select an existing ONVIF camera and detection sensors. Replace the synthetic example sectors with your own calibration. This helper reads status only.",
+        "data": {
+          "name": "Name",
+          "camera_entity_id": "Existing ONVIF camera",
+          "sources": "Detection binary sensors",
+          "sectors": "Area sectors (JSON)"
+        }
+      }
+    },
+    "error": {
+      "invalid_camera": "Select a camera from the built-in ONVIF integration.",
+      "camera_unavailable": "Load and connect the built-in ONVIF camera before configuring this helper.",
+      "unsupported_device": "This camera exposes no PTZ-capable profile. Read-only position estimates are unsupported.",
+      "invalid_config": "Check detection sources, JSON sectors and timing. Sectors need unique non-overlapping ranges within [-1, 1]. Retry interval must be at least the poll interval."
+    },
+    "abort": {
+      "already_configured": "This ONVIF device already has a direction helper."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Detection and calibration",
+        "description": "Bounds: poll 0.5–60; confirmation 0.5–120; retry 1–300; timeout 0.5–30; position age 1–120; future skew 0–30 seconds. Saving reloads the helper and clears confirmation.",
+        "data": {
+          "sources": "Detection binary sensors",
+          "sectors": "Area sectors (JSON)",
+          "enabled": "Enable direction estimates",
+          "poll_interval": "Poll interval (seconds)",
+          "confirmation_interval": "Confirmation interval (seconds)",
+          "failure_interval": "Retry after failure (seconds)",
+          "timeout": "Read timeout (seconds)",
+          "max_age": "Maximum position age (seconds)",
+          "future_skew": "Allowed future clock skew (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_config": "Check detection sources, JSON sectors and timing. Sectors need unique non-overlapping ranges within [-1, 1]. Retry interval must be at least the poll interval."
+    }
+  }
+}

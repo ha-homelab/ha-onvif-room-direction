@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ha-onvif-room-direction"
+version = "0.1.0b1"
+description = "Read-only ONVIF camera direction estimates for Home Assistant"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest==8.4.2", "pytest-asyncio==1.2.0", "ruff==0.14.1"]
+ha-test = ["homeassistant==2026.10.0"]
+demo = ["playwright==1.56.0"]
+
+[project.urls]
+Repository = "https://github.com/ha-homelab/ha-onvif-room-direction"
+Issues = "https://github.com/ha-homelab/ha-onvif-room-direction/issues"
+
+[tool.setuptools.packages.find]
+include = ["custom_components.onvif_room_direction*"]
+
+[tool.setuptools.package-data]
+"custom_components.onvif_room_direction" = ["*.json", "translations/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+addopts = "-ra"
+markers = ["ha: requires Home Assistant 2026.10.0 and Python 3.14.2+"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC"]
+ignore = ["E501"]

@@ -1,0 +1,7 @@
+{
+  "name": "ONVIF Room Direction",
+  "homeassistant": "2026.10.0",
+  "render_readme": true,
+  "zip_release": true,
+  "filename": "onvif_room_direction.zip"
+}
