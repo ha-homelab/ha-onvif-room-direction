@@ -1,0 +1,4 @@
+[
+  {"area": "zone_a", "min": -1, "max": -0.2},
+  {"area": "zone_b", "min": 0.2, "max": 1}
+]

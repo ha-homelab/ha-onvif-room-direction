@@ -1,0 +1,5 @@
+include LICENSE THIRD_PARTY_NOTICES.md README.md CHANGELOG.md CONTRIBUTING.md SECURITY.md version hacs.json
+recursive-include docs *.md *.html *.png
+recursive-include examples *.html *.json
+recursive-include scripts *.py *.sh
+recursive-include tests *.py
