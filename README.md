@@ -13,7 +13,7 @@ The screenshot is a browser capture of the included [offline synthetic replay](d
 ## Install the beta
 
 1. Configure and verify your camera in Home Assistant's built-in **ONVIF** integration. The camera must expose PTZ `GetStatus`, normalized pan, and a fresh timezone-aware `UtcTime`. No specific camera models are certified in this beta.
-2. Download `onvif_room_direction.zip` and `SHA256SUMS` from [Releases](https://github.com/ha-homelab/ha-onvif-room-direction/releases). Verify the checksum, create `config/custom_components/onvif_room_direction/`, and unzip the archive **into that directory**. `manifest.json` must sit directly inside it.
+2. Download all assets for one release from [Releases](https://github.com/ha-homelab/ha-onvif-room-direction/releases) and follow [signed-release verification](docs/release-signatures.md) before extracting them. Create `config/custom_components/onvif_room_direction/` and unzip `onvif_room_direction.zip` **into that directory**. `manifest.json` must sit directly inside it.
 3. Restart Home Assistant. Go to **Settings → Devices & services → Add integration → ONVIF Room Direction**.
 4. Choose the existing ONVIF camera, one or more binary detection sensors, a display name, and calibrated sectors. The displayed example values are synthetic: replace them before using the estimate.
 5. Open the new integration's options to adjust sectors, sources, enablement, confirmation, polling, freshness and retry timing.
