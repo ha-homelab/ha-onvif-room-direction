@@ -181,7 +181,7 @@ async def test_confirm_fail_recover_and_runtime_replacement(env):
         patch.object(sensor, "monotonic", side_effect=[10, 12, 20, 22, 30, 32]),
     ):
         entity.reconcile()
-        await entity._task
+        await asyncio.wait_for(entity._task, timeout=3)
     assert observations == [
         (None, True),
         ("zone_b", True),
@@ -216,7 +216,7 @@ async def test_old_cancelled_response_cannot_replace_new_task(env):
         entity.reconcile()
         current = entity._task
         gate.set()
-        await old
+        await asyncio.wait_for(old, timeout=3)
         assert entity._task is current
         assert not entity._stopped
 
