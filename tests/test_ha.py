@@ -254,7 +254,7 @@ async def test_cancelled_read_finishes_before_next_detection_reads(env):
             assert calls == 1
         finally:
             release.set()
-            await old
+            await asyncio.wait_for(old, timeout=3)
         await asyncio.sleep(0)
         assert calls == 2
         assert entity._task is current
@@ -269,8 +269,10 @@ async def test_transport_cannot_suppress_read_timeout(env):
         try:
             await asyncio.Event().wait()
         except asyncio.CancelledError:
+            # Deliberately return a late response instead of propagating the
+            # timeout, reproducing a transport that suppresses cancellation.
             timed_out.set()
-            return reading()
+        return reading()
 
     with patch.object(sensor.OnvifPanReader, "read", read):
         entity.reconcile()
@@ -286,6 +288,7 @@ async def test_unload_is_bounded_when_transport_ignores_cancellation(env):
     _, entity = env
     entity.config = replace(entity.config, timeout=0.5)
     started = asyncio.Event()
+    cancelled = asyncio.Event()
     release = asyncio.Event()
 
     async def read(_self):
@@ -294,7 +297,9 @@ async def test_unload_is_bounded_when_transport_ignores_cancellation(env):
             try:
                 await release.wait()
             except asyncio.CancelledError:
-                pass
+                # Simulate noncooperative third-party I/O until the test releases
+                # it, while proving that unload actually requested cancellation.
+                cancelled.set()
         return reading()
 
     with patch.object(sensor.OnvifPanReader, "read", read):
@@ -304,11 +309,12 @@ async def test_unload_is_bounded_when_transport_ignores_cancellation(env):
         try:
             await asyncio.wait_for(entity.async_will_remove_from_hass(), timeout=3)
             assert entity._stopped and entity._task is None
+            assert cancelled.is_set()
             assert not pending.done()
             assert entity._cancel_expiry is None
         finally:
             release.set()
-            await pending
+            await asyncio.wait_for(pending, timeout=3)
         assert not entity._tasks
         entity.async_write_ha_state.assert_not_called()
 
