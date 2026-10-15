@@ -17,7 +17,9 @@ from custom_components.onvif_room_direction.core import (
 SECTORS = (Sector("zone_a", -1, -0.2), Sector("zone_b", 0.2, 1))
 
 
-@pytest.mark.parametrize("pan", [None, True, False, "0.5", math.nan, math.inf, -1.01, 1.01, -0.2, 0, 0.2])
+@pytest.mark.parametrize(
+    "pan", [None, True, False, "0.5", math.nan, math.inf, -1.01, 1.01, -0.2, 0, 0.2, 10**400, -(10**400)]
+)
 def test_invalid_boundary_and_gap_positions_are_unknown(pan):
     assert classify_pan(pan, SECTORS) is None
 
@@ -59,6 +61,7 @@ def test_confirmation_clears_gaps_transitions_and_clock_reversal():
         '[{"area":"zone_a","min":0.5,"max":0.2}]',
         '[{"area":"zone_a","min":-1,"max":1,"extra":0}]',
         '[{"area":"a","min":-1,"max":0.5},{"area":"b","min":0,"max":1}]',
+        [{"area": "zone_a", "min": -1, "max": 10**400}],
     ],
 )
 def test_invalid_sectors_rejected(raw):
@@ -80,6 +83,7 @@ def test_separated_ranges_can_share_an_area_and_touch_at_unknown_edge():
         {"timeout": math.nan},
         {"max_age": True},
         {"future_skew": -1},
+        {"timeout": 10**400},
         {"failure_interval": 1},
         {"enabled": 1},
         {"sources": ("sensor.demo",)},

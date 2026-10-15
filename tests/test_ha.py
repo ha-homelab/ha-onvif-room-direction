@@ -5,6 +5,7 @@ These tests do not bootstrap ONVIF, open sockets, or use user configuration.
 """
 
 import asyncio
+from dataclasses import replace
 from datetime import UTC, datetime
 from types import SimpleNamespace as NS
 from unittest.mock import AsyncMock, Mock, patch
@@ -109,6 +110,50 @@ async def test_restored_disabled_and_guarded_entities_do_not_poll(env):
     assert entity._task is None
 
 
+async def test_rapid_detection_gap_clears_old_confirmation(env):
+    """Process queued off/on edges, even when HA already holds the final on."""
+    hass, entity = env
+    started = asyncio.Event()
+
+    async def read(_self):
+        started.set()
+        await asyncio.Event().wait()
+
+    with patch.object(sensor.OnvifPanReader, "read", read):
+        await entity.async_added_to_hass()
+        await started.wait()
+        old = entity._task
+        entity._publish("zone_b", 0.6, reason="confirmed")
+        hass.states.async_set("binary_sensor.demo_motion", "off")
+        hass.states.async_set("binary_sensor.demo_motion", "on")
+        await hass.async_block_till_done()
+        assert entity._attr_native_value is None
+        assert entity._task is not None and entity._task is not old
+        await entity.async_will_remove_from_hass()
+        entity._call_on_remove_callbacks()
+
+
+async def test_continuous_detection_across_sources_keeps_one_task(env):
+    hass, entity = env
+    entity.config = replace(entity.config, sources=(*entity.config.sources, "binary_sensor.other_motion"))
+    started = asyncio.Event()
+
+    async def read(_self):
+        started.set()
+        await asyncio.Event().wait()
+
+    with patch.object(sensor.OnvifPanReader, "read", read):
+        await entity.async_added_to_hass()
+        await started.wait()
+        task = entity._task
+        hass.states.async_set("binary_sensor.other_motion", "on")
+        hass.states.async_set("binary_sensor.demo_motion", "off")
+        await hass.async_block_till_done()
+        assert entity._task is task
+        await entity.async_will_remove_from_hass()
+        entity._call_on_remove_callbacks()
+
+
 async def test_confirm_fail_recover_and_runtime_replacement(env):
     _, entity = env
     observations, delays = [], []
@@ -174,6 +219,98 @@ async def test_old_cancelled_response_cannot_replace_new_task(env):
         await old
         assert entity._task is current
         assert not entity._stopped
+
+
+async def test_cancelled_read_finishes_before_next_detection_reads(env):
+    """A transport delaying cancellation must not overlap another GetStatus."""
+    _, entity = env
+    started = asyncio.Event()
+    cancelled = asyncio.Event()
+    release = asyncio.Event()
+    calls = 0
+
+    async def read(_self):
+        nonlocal calls
+        calls += 1
+        started.set()
+        try:
+            await release.wait()
+        except asyncio.CancelledError:
+            cancelled.set()
+            await release.wait()
+        return reading()
+
+    with patch.object(sensor.OnvifPanReader, "read", read):
+        entity.reconcile()
+        old = entity._task
+        await started.wait()
+        entity._cancel()
+        await cancelled.wait()
+        entity.reconcile()
+        current = entity._task
+        try:
+            # Give the new task an event-loop turn to attempt its read.
+            await asyncio.sleep(0)
+            assert calls == 1
+        finally:
+            release.set()
+            await old
+        await asyncio.sleep(0)
+        assert calls == 2
+        assert entity._task is current
+
+
+async def test_transport_cannot_suppress_read_timeout(env):
+    _, entity = env
+    entity.config = replace(entity.config, timeout=0.5)
+    timed_out = asyncio.Event()
+
+    async def read(_self):
+        try:
+            await asyncio.Event().wait()
+        except asyncio.CancelledError:
+            timed_out.set()
+            return reading()
+
+    with patch.object(sensor.OnvifPanReader, "read", read):
+        entity.reconcile()
+        await asyncio.wait_for(timed_out.wait(), timeout=2)
+        await asyncio.sleep(0)
+        assert not entity._attr_available
+        assert entity._attr_extra_state_attributes["reason"] == "read_failed"
+        assert entity._successes == 0
+
+
+async def test_unload_is_bounded_when_transport_ignores_cancellation(env):
+    """Unloading cannot force third-party I/O to stop, but late data is inert."""
+    _, entity = env
+    entity.config = replace(entity.config, timeout=0.5)
+    started = asyncio.Event()
+    release = asyncio.Event()
+
+    async def read(_self):
+        started.set()
+        while not release.is_set():
+            try:
+                await release.wait()
+            except asyncio.CancelledError:
+                pass
+        return reading()
+
+    with patch.object(sensor.OnvifPanReader, "read", read):
+        entity.reconcile()
+        pending = entity._task
+        await started.wait()
+        try:
+            await asyncio.wait_for(entity.async_will_remove_from_hass(), timeout=3)
+            assert entity._stopped and entity._task is None
+            assert not pending.done()
+            assert entity._cancel_expiry is None
+        finally:
+            release.set()
+            await pending
+        assert not entity._tasks
+        entity.async_write_ha_state.assert_not_called()
 
 
 async def test_expiry_clears_a_confirmed_result_during_blocked_poll(env):
