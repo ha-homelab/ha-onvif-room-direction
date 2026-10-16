@@ -1,5 +1,7 @@
 # ONVIF Room Direction
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/15561/badge)](https://www.bestpractices.dev/projects/15561)
+
 An event-gated Home Assistant sensor that estimates which calibrated area an ONVIF camera points toward. It reuses the existing ONVIF integration's authenticated client and reads PTZ status while a selected detection sensor is on.
 
 **Home Assistant 2026.10.0 API baseline · Extension API v1**
@@ -56,3 +58,9 @@ PYTHON=.venv/bin/python ./scripts/check.sh
 The check runs lint, formatting, synthetic tests and deterministic ZIP packaging. It also installs the ZIP into a temporary directory and exercises real HA configuration, options reload, sensor confirmation and unload, with all network operations blocked. It never contacts a camera or a Home Assistant server. To test just the portable API, install `.[test]` and run `python3 -m pytest tests/test_core.py tests/test_adapter.py`. See [validation scope](docs/validation.md) for what these checks establish.
 
 See [CONTRIBUTING](CONTRIBUTING.md) for screenshots and release validation, [SECURITY](SECURITY.md) for safe reports, and [CHANGELOG](CHANGELOG.md) for changes. MIT licensed.
+
+## Project policies
+
+[Contributing](CONTRIBUTING.md) · [Governance](GOVERNANCE.md) ·
+[Code of conduct](CODE_OF_CONDUCT.md) · [Security](SECURITY.md) ·
+[Roadmap](ROADMAP.md) · [Quality evidence](docs/quality.md)

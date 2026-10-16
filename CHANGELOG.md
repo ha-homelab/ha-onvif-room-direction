@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Document current support, private security reporting, project governance and
+  the limits of the OpenSSF self-assessment and synthetic HA verification.
+
+
 ## [0.1.0] - Initial public beta
 
 - Serialize reads across cancelled detection episodes and reject late responses when a transport suppresses timeout cancellation.
