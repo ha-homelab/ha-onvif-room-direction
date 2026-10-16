@@ -35,3 +35,10 @@ blocks network activity and uses a fake existing camera client. It verifies the
 integration contract with HA 2026.10.0, not a live device or camera authentication.
 
 See [SECURITY.md](../SECURITY.md) for private reporting and current support.
+
+## Release-client transport
+
+The shared release client delegates API requests to GitHub CLI. Apply the
+[verified release TLS profile](release-tls-profile.md) when using its commands;
+it preserves normal certificate checks and supports rejecting smaller keys.
+This is independent of application camera or legacy recovery protocols.
