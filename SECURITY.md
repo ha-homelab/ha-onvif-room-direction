@@ -6,6 +6,23 @@ Sensor state contains your chosen area labels, normalized pan and the time the o
 
 Diagnostics are constructed from an allowlist of version, timing, counts and fixed reason codes. They omit source IDs, area labels, pan, addresses, profile tokens and raw exceptions. Do not add raw device objects or entry dictionaries to logs or diagnostics.
 
-Report vulnerabilities through the repository's private **Report a vulnerability** mechanism when available. If it is unavailable, open an issue asking the maintainers for a private reporting channel without including exploit details or private data. Avoid posting credentials, raw network captures or camera responses publicly. Rotate accidentally disclosed camera credentials immediately.
+## Private reporting and support
 
-The current 0.1 beta line receives fixes on a best-effort basis. There is no security support guarantee for old betas or unverified Home Assistant runtime changes.
+Report vulnerabilities through [GitHub private vulnerability reporting](https://github.com/ha-homelab/ha-onvif-room-direction/security/advisories/new)
+or email **alvit.work@gmail.com**. Include the affected version or commit,
+prerequisites, impact and a minimal synthetic reproduction. Do not put camera
+credentials, identifiers, raw captures or exploit details in public issues.
+
+The latest stable 0.1 release and the default branch receive security fixes.
+Older releases and unverified Home Assistant versions are not separate supported
+security branches. A beta or release candidate is not production acceptance.
+
+## Response, disclosure and credit
+
+The maintainer aims to acknowledge reports within 14 days, reproduce and assess
+impact, agree on remediation and disclosure with the reporter, and prioritize
+critical issues. Follow up at the same private address if no reply arrives.
+Release notes identify security fixes, affected versions, upgrade actions and
+available CVE/advisory identifiers. Credit the reporter unless they request
+anonymity. These are process commitments, not claims of a guaranteed response
+under all circumstances.

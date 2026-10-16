@@ -19,3 +19,17 @@ The screenshot command renders the included synthetic HTML locally using Chromiu
 `scripts/build-release.py` writes `dist/onvif_room_direction.zip` with integration files at the archive root, plus `dist/SHA256SUMS`. ZIP entries use fixed timestamps, file modes and ordering. It includes only explicit Python/JSON integration files and the license, never workspaces or configuration. The packaging test builds twice and compares bytes.
 
 Before a release, update the changelog, run checks, inspect the archive and test installation in an isolated HA instance. Follow [RELEASING](RELEASING.md) for the reviewed release pipeline and its beta, RC and stable channels; do not manually tag, upload assets or edit generated release workflows. The pipeline keeps the projected `version`, `pyproject.toml`, `manifest.json` and `const.VERSION` synchronized. Do not claim a device model is supported based only on synthetic tests. Shared CI workflows are maintained by the organization and should be pinned to full commit SHAs.
+
+## Review, rights and coding conventions
+
+Follow [governance](GOVERNANCE.md) and the [code of conduct](CODE_OF_CONDUCT.md).
+Submit only work you have the right to license under this repository's MIT
+license; retain third-party notices and identify copied or generated material.
+Python follows PEP 8 and the repository's configured lint rules. Shell scripts
+must quote path and data arguments, check failures and keep execution explicit.
+Update interface documentation and changelog entries when behavior changes.
+Tests for new functionality and regression fixes are required unless the PR
+explains why automation is infeasible and supplies a reproducible alternative.
+Resolve new lint, compiler and analysis warnings before merging, or record a
+specific reviewed false-positive explanation. Do not disable safety checks to
+make CI pass. Keep test assertions enabled.
