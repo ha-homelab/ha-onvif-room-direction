@@ -1,10 +1,19 @@
 # Changelog
 
-## Unreleased
+## [0.1.1] - 2026-10-17
 
-- Document current support, private security reporting, project governance and
-  the limits of the OpenSSF self-assessment and synthetic HA verification.
+### Changed
 
+- Document supported security reporting, governance, maintenance and the limits of the OpenSSF self-assessment and synthetic Home Assistant verification.
+- Synchronize the distribution, integration manifest and runtime version for this documentation maintenance release.
+
+### Upgrade
+
+Install the verified integration ZIP using the existing procedure and restart Home Assistant. Existing detection sources, sector configuration and read-only ONVIF behavior remain unchanged. Keep the previous package for rollback.
+
+### Security
+
+This release does not add camera movement, streams, network permissions or live-device qualification. Existing freshness, cancellation and bounded-input checks remain in place.
 
 ## [0.1.0] - Initial public beta
 
