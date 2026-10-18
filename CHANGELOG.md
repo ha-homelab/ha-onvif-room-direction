@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.2] - 2026-10-18
+
+### Changed
+
+- Restore Dependabot approval automation by routing default-branch dependency PR metadata through the trusted target workflow. Trusted-author, draft and opt-in label checks remain enforced; the approval job does not execute PR code.
+- Synchronize package version fields for this CI maintenance release.
+
+### Upgrade
+
+Install the verified integration ZIP using the documented procedure, then restart Home Assistant. Retain sector configuration and the previous package for rollback.
+
+### Security
+
+The helper continues to read existing ONVIF status without camera movement or additional streams. Synthetic tests do not qualify a physical camera.
+
 ## [0.1.1] - 2026-10-17
 
 ### Changed
