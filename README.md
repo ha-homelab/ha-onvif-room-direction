@@ -1,5 +1,7 @@
 # ONVIF Room Direction
 
+[![RC fuzzing](https://img.shields.io/badge/fuzzing-RC_only-0a9f8f)](docs/fuzzing.md)
+
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/15561/badge)](https://www.bestpractices.dev/projects/15561)
 
 An event-gated Home Assistant sensor that estimates which calibrated area an ONVIF camera points toward. It reuses the existing ONVIF integration's authenticated client and reads PTZ status while a selected detection sensor is on.
