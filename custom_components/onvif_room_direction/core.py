@@ -59,7 +59,7 @@ def parse_sectors(raw: str | list[dict[str, Any]]) -> tuple[Sector, ...]:
                 raise ValueError
             sectors.append(Sector(value["area"], value["min"], value["max"]))
         return validate_sectors(tuple(sectors))
-    except (ValueError, TypeError, KeyError) as err:
+    except (ValueError, TypeError, KeyError, RecursionError) as err:
         raise ValueError("Invalid sectors: use area, min, max and non-overlapping ranges") from err
 
 
