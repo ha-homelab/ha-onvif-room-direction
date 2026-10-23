@@ -102,7 +102,7 @@ uart-devices==0.1.1
 ulid-transform==2.2.9
 urllib3==2.8.0
 usb-devices==0.5.1
-uv==0.12.23
+uv==0.13.4
 voluptuous==0.16.0
 webrtc-models==0.3.0
 yarl==1.25.1
