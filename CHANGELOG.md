@@ -1,6 +1,21 @@
 # Changelog
 
-## [0.1.3] - Unreleased
+## [0.1.4] - Unreleased
+
+### Changed
+
+- Record Home Assistant 2026.10.3 as the tested diagnostic baseline and validate with its compatible uv 0.13.5 dependency. The supported minimum version is unchanged.
+- Update the pinned release signer module overlay to chi v5.4.0 while retaining the existing Cosign source revision.
+
+### Upgrade
+
+Install the verified integration ZIP using the existing procedure and restart Home Assistant. Retain sector configuration and the previous package for rollback. No configuration migration is required.
+
+### Security
+
+The signer dependency update resolves the reported chi advisory in release tooling. Home Assistant still requires Pillow 12.3.0 in the isolated test environment; the separate upstream constraint remains open. The helper keeps its read-only camera behavior, and simulated checks do not qualify a physical camera or establish sensing accuracy.
+
+## [0.1.3] - 2026-10-24
 
 ### Changed
 
