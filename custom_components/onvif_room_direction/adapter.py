@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Read-only adapter for the Home Assistant 2026.10.0 ONVIF runtime.
+"""Read-only adapter for the Home Assistant 2026.10.3 ONVIF runtime.
 
 Only create_ptz_service and GetStatus are invoked. An injected resolver makes
 this module testable without Home Assistant or a camera.
