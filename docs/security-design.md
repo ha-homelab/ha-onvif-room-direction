@@ -32,7 +32,7 @@ from a successful offline test.
 [Validation scope](validation.md) maps classifier, adapter, lifecycle, diagnostic
 and deterministic packaging controls to synthetic tests. The packaged HA canary
 blocks network activity and uses a fake existing camera client. It verifies the
-integration contract with HA 2026.10.0, not a live device or camera authentication.
+integration contract with HA 2026.10.3, not a live device or camera authentication.
 
 See [SECURITY.md](../SECURITY.md) for private reporting and current support.
 

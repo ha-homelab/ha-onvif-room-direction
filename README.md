@@ -6,7 +6,7 @@
 
 An event-gated Home Assistant sensor that estimates which calibrated area an ONVIF camera points toward. It reuses the existing ONVIF integration's authenticated client and reads PTZ status while a selected detection sensor is on.
 
-**Home Assistant 2026.10.0 API baseline · Extension API v1**
+**Home Assistant 2026.10.3 API baseline · Extension API v1**
 
 Choose the release channel shown on [Releases](https://github.com/ha-homelab/ha-onvif-room-direction/releases). A stable label describes the software release; it does not certify a camera model or your calibration.
 
