@@ -2,7 +2,7 @@
 
 ## Before installing
 
-Use Home Assistant Core **2026.10.0**, the exact tested API baseline. The HACS minimum version is an installation floor, not a promise that every later Core version works. The standalone Python package and portable core API do not install a Home Assistant integration for you.
+Use Home Assistant Core **2026.10.3**, the exact tested API baseline. The HACS minimum version is an installation floor, not a promise that every later Core version works. The standalone Python package and portable core API do not install a Home Assistant integration for you.
 
 Configure your camera with the built-in ONVIF integration first. A working video stream alone does not prove compatibility: this helper requires a PTZ-capable profile, readable normalized pan, and fresh, advancing timezone-aware status timestamps. You also need one or more existing binary sensors that turn `on` during the detections you want to observe. They can be independent of the camera; the helper does not create detection sensors.
 

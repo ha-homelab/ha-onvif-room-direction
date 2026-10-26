@@ -2,11 +2,11 @@
 
 ## Exact API baseline
 
-The tested baseline is **Home Assistant Core 2026.10.0**, Python **3.14.2+**. Its adapter has been checked against the upstream [ONVIF setup](https://github.com/home-assistant/core/blob/2026.10.0/homeassistant/components/onvif/__init__.py), [device](https://github.com/home-assistant/core/blob/2026.10.0/homeassistant/components/onvif/device.py), and [profile models](https://github.com/home-assistant/core/blob/2026.10.0/homeassistant/components/onvif/models.py).
+The tested baseline is **Home Assistant Core 2026.10.3**, Python **3.14.2+**. Its adapter has been checked against the upstream [ONVIF setup](https://github.com/home-assistant/core/blob/2026.10.3/homeassistant/components/onvif/__init__.py), [device](https://github.com/home-assistant/core/blob/2026.10.3/homeassistant/components/onvif/device.py), and [profile models](https://github.com/home-assistant/core/blob/2026.10.3/homeassistant/components/onvif/models.py).
 
 It relies on the existing ONVIF config entry's `runtime_data`, `available`, `profiles[*].ptz`, `profiles[*].token` and `device.create_ptz_service()`. It selects the first PTZ-capable profile and calls only `GetStatus({"ProfileToken": token})`. This runtime interface belongs to another integration and is not a stable public Home Assistant extension API. Other Core releases are unverified; retest before upgrading.
 
-The integration is tested offline against actual 2026.10.0 Home Assistant classes, event bus and configuration flows with synthetic camera responses, including installation of its ZIP in an isolated interpreter. No physical camera model, full end-to-end ONVIF connection, or live Home Assistant deployment is certified by these tests. Compatible firmware must return valid normalized `Position.PanTilt.x` and strictly advancing timezone-aware `UtcTime`. If `PanTilt.space` is present, only ONVIF's generic normalized position space is accepted. Missing space metadata is accepted if the value is normalized. See [validation scope](validation.md).
+The integration is tested offline against actual 2026.10.3 Home Assistant classes, event bus and configuration flows with synthetic camera responses, including installation of its ZIP in an isolated interpreter. No physical camera model, full end-to-end ONVIF connection, or live Home Assistant deployment is certified by these tests. Compatible firmware must return valid normalized `Position.PanTilt.x` and strictly advancing timezone-aware `UtcTime`. If `PanTilt.space` is present, only ONVIF's generic normalized position space is accepted. Missing space metadata is accepted if the value is normalized. See [validation scope](validation.md).
 
 ## Integration does not appear or fails to load
 

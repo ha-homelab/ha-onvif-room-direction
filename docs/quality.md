@@ -4,7 +4,22 @@ This project assesses its own application, host tooling and release sources.
 Third-party platforms and physical-device acceptance remain explicitly separate.
 The OpenSSF form is a project self-assessment, not an independent certification.
 
-## Current verification — 2026-10-16
+## Dependency baseline update — 2026-10-24
+
+The test environment now targets Home Assistant 2026.10.3, which pins the patched
+`uv==0.13.5`. The earlier `uv==0.13.4`-only update was incompatible with Home
+Assistant 2026.10.0's exact `uv==0.12.23` requirement. Application behavior is
+unchanged; the reported tested baseline follows the actual test environment.
+The full local check passed Ruff lint/format, all 70 tests and ZIP construction
+on CPython 3.14.7. The three consumed upstream ONVIF source modules are
+byte-identical between Home Assistant 2026.10.0 and 2026.10.3.
+
+Home Assistant 2026.10.3 still requires `Pillow==12.3.0`. The published Pillow
+advisories list 13.0.0 as patched, so this upstream dependency remains open;
+forcing an incompatible version or hiding the alert is not a resolution.
+See the [upstream dependency tracking issue](https://github.com/ha-homelab/ha-scenario-tests/issues/27).
+
+## Recorded verification — 2026-10-16
 
 The checked local run used CPython 3.14.7 and Home Assistant 2026.10.0:
 `PYTHON=.venv/bin/python ./scripts/check.sh` passed Ruff lint/format, all 69
