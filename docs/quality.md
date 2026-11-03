@@ -4,9 +4,31 @@ This project assesses its own application, host tooling and release sources.
 Third-party platforms and physical-device acceptance remain explicitly separate.
 The OpenSSF form is a project self-assessment, not an independent certification.
 
+## Prerelease test baseline — 2026-11-02
+
+The isolated test environment targets Home Assistant **2026.11.0b3**, whose
+published requirements include `Pillow==13.0.0`. The Linux CI lock is resolved
+against those exact upstream requirements; no Pillow or Home Assistant pin is
+overridden. This addresses the Pillow constraint in this repository's test
+environment only. It does not update or assess an installed Home Assistant
+server. The stable 2026.10.3 environment still requires Pillow 12.3.0.
+
+The full local check on CPython 3.14.7 passes Ruff lint/format, all 70 tests with
+no skips, and ZIP construction. The packaged canary initializes Home Assistant's
+config-entry manager and frame helper before loading its registries. Its
+existing runtime assertions and network prohibition are unchanged. The same
+fixture also passes all 70 tests with Home Assistant 2026.10.3.
+
+The consumed upstream ONVIF `device.py` and `models.py` are byte-identical between
+2026.10.3 and 2026.11.0b3. The setup module adds service registration and adopts
+Home Assistant's updated entry-result convention; the runtime-data assignment,
+profile/client fields and read-only `GetStatus` interface used here are unchanged.
+No physical camera or live deployment was tested. The [tracking issue](https://github.com/ha-homelab/ha-onvif-room-direction/issues/28)
+records this test-dependency change. Assess installed environments separately.
+
 ## Dependency baseline update — 2026-10-24
 
-The test environment now targets Home Assistant 2026.10.3, which pins the patched
+At this historical checkpoint, the test environment targeted Home Assistant 2026.10.3, which pins the patched
 `uv==0.13.5`. The earlier `uv==0.13.4`-only update was incompatible with Home
 Assistant 2026.10.0's exact `uv==0.12.23` requirement. Application behavior is
 unchanged; the reported tested baseline follows the actual test environment.
@@ -15,7 +37,7 @@ on CPython 3.14.7. The three consumed upstream ONVIF source modules are
 byte-identical between Home Assistant 2026.10.0 and 2026.10.3.
 
 Home Assistant 2026.10.3 still requires `Pillow==12.3.0`. The published Pillow
-advisories list 13.0.0 as patched, so this upstream dependency remains open;
+advisories list 13.0.0 as patched, so that stable test baseline remained constrained;
 forcing an incompatible version or hiding the alert is not a resolution.
 See the [upstream dependency tracking issue](https://github.com/ha-homelab/ha-scenario-tests/issues/27).
 

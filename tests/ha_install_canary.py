@@ -34,6 +34,7 @@ async def verify(root):
     from homeassistant.core import HomeAssistant, callback
     from homeassistant.helpers import device_registry as dr
     from homeassistant.helpers import entity_registry as er
+    from homeassistant.helpers import frame
     from homeassistant.helpers.event import async_track_state_change_event
 
     from custom_components.onvif_room_direction import sensor
@@ -48,11 +49,13 @@ async def verify(root):
     assert __version__ == TESTED_HA_VERSION
     hass = HomeAssistant(str(root))
     loader.async_setup(hass)
+    frame.async_setup(hass)
     dr.async_setup(hass)
     await dr.async_load(hass, load_empty=True)
+    hass.config_entries = ConfigEntries(hass, {})
+    await hass.config_entries.async_initialize()
     await er.async_load(hass, load_empty=True)
     registry = er.async_get(hass)
-    hass.config_entries = ConfigEntries(hass, {})
 
     # The dependency is the only simulated integration. Its client has exactly
     # the two read-only methods our adapter is permitted to invoke.

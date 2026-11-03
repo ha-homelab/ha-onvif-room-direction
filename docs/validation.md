@@ -1,6 +1,6 @@
 # Validation scope
 
-The automated baseline is **Home Assistant Core 2026.10.3**. Tests use invented entities, labels, timestamps and ONVIF responses. They do not connect to Home Assistant servers or cameras, move hardware, open streams, or certify firmware.
+The automated baseline is **Home Assistant Core 2026.11.0b3** (prerelease). Tests use invented entities, labels, timestamps and ONVIF responses. They do not connect to Home Assistant servers or cameras, move hardware, open streams, or certify firmware.
 
 `PYTHON=.venv/bin/python ./scripts/check.sh` covers:
 
