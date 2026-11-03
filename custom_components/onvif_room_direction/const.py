@@ -2,7 +2,7 @@
 """Integration constants."""
 
 DOMAIN = "onvif_room_direction"
-VERSION = "0.1.4"
+VERSION = "0.1.5"
 TESTED_HA_VERSION = "2026.11.0b3"
 DEFAULT_SECTORS = '[{"area":"zone_a","min":-1,"max":-0.2},{"area":"zone_b","min":0.2,"max":1}]'
 TIMING_DEFAULTS = {

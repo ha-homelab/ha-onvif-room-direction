@@ -1,16 +1,21 @@
 # Changelog
 
-## [Unreleased]
+## [0.1.5] - Unreleased
 
 ### Changed
 
 - Qualify the isolated test environment against Home Assistant 2026.11.0b3 and record that prerelease test baseline in diagnostics. Initialize real HA fixture services before registry loading, preserving the existing assertions.
 
+### Upgrade
+
+Use the existing verified ZIP installation procedure and retain configuration and the previous archive for rollback. No configuration migration is required. The test baseline is a Home Assistant prerelease; this package does not upgrade the installed HA server.
+
 ### Security
 
+- Retain the reviewed release-publisher checks and signer dependency update to go-jose 4.1.6 since 0.1.4.
 - Resolve the CI dependency lock against upstream beta3 requirements, including Pillow 13.0.0, without overriding exact pins. This does not update an installed HA server or certify physical-camera behavior.
 
-## [0.1.4] - Unreleased
+## [0.1.4] - 2026-10-24
 
 ### Changed
 
