@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- Qualify the isolated test environment against Home Assistant 2026.11.0b3 and record that prerelease test baseline in diagnostics. Initialize real HA fixture services before registry loading, preserving the existing assertions.
+
+### Security
+
+- Resolve the CI dependency lock against upstream beta3 requirements, including Pillow 13.0.0, without overriding exact pins. This does not update an installed HA server or certify physical-camera behavior.
+
 ## [0.1.4] - Unreleased
 
 ### Changed
