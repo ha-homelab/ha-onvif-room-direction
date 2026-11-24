@@ -1,7 +1,30 @@
 # Changelog
 
-## [0.1.5] - Unreleased
+## [0.1.6] - Unreleased
 
+### Changed
+
+- add a navigation index for docs/.
+- preserve merge identity and withdrawn auto-merge requests (#58).
+- verify current default branch before reviewed merges (#55).
+- complete reviewed dependency approval and merge wiring (#54).
+- use the shared CI regeneration guide (#52).
+- skip heavy validation for documentation-only changes (#51).
+- Document targeted security updates for manual dependency locks (#50).
+- Complete dependency update migration to Renovate (#49).
+- recheck automatic publication source (#43).
+- reconcile lost creation responses (#42).
+
+### Upgrade
+
+Use the existing verified ZIP installation procedure and retain configuration and the previous archive for rollback. No configuration migration is required. The test baseline is a Home Assistant prerelease; this package does not upgrade the installed HA server.
+
+### Security
+
+- Retain the reviewed release-publisher checks and signer dependency update to go-jose 4.1.6 since 0.1.4.
+- Resolve the CI dependency lock against upstream beta3 requirements, including Pillow 13.0.0, without overriding exact pins. This does not update an installed HA server or certify physical-camera behavior.
+
+## [0.1.5] - 2026-11-02
 ### Changed
 
 - Qualify the isolated test environment against Home Assistant 2026.11.0b3 and record that prerelease test baseline in diagnostics. Initialize real HA fixture services before registry loading, preserving the existing assertions.
